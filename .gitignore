@@ -105,3 +105,13 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# ---- UREX additions ----
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+# ROS 2 workspace build output
+/ros2_ws/build/
+/ros2_ws/install/
+/ros2_ws/log/

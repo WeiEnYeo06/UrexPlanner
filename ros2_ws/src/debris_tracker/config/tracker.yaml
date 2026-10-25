@@ -1,0 +1,34 @@
+# Parameters for debris_tracker. Override any of them on the command line, e.g.
+#   ros2 launch debris_tracker tracker.launch.py image_topic:=/twin/camera/image_raw
+/**:
+  ros__parameters:
+    # --- inputs (defaults = realsense2_camera driver; Unity twin: /twin/camera/image_raw etc.)
+    image_topic: /camera/camera/color/image_raw
+    camera_info_topic: /camera/camera/color/camera_info
+    depth_topic: ""            # e.g. /camera/camera/aligned_depth_to_color/image_raw ("" = range from cube size)
+
+    # --- detection
+    detector: color            # color | yolo
+    hsv_lower: [15, 120, 80]   # OpenCV HSV. Unity debris (0.80, 0.62, 0.20) is H~21 S~191 V~204
+    hsv_upper: [30, 255, 255]
+    yolo_weights: ""
+    yolo_conf: 0.4
+    debris_size: 0.1           # 1U cube [m]
+    min_pixels: 30
+    erode_px: 2
+
+    # --- tracking / centering
+    alpha: 0.6                 # low-pass, 1 = off
+    max_lost: 10               # frames to coast before commanding zero rate
+    gain: 1.5                  # [1/s]
+    max_rate: 0.5              # [rad/s]
+    deadband_deg: 0.5
+    standoff: 0.2              # look-at setpoint distance [m] (= hold_distance)
+
+    # --- frames / output
+    camera_frame: ""           # "" = use the image header frame_id
+    world_frame: ""            # e.g. world  -> also publish debris/position_world through TF
+    publish_debug_image: true
+    fallback_hfov_deg: 87.0    # D405, used until camera_info arrives
+    fallback_vfov_deg: 58.0
+    depth_max_age: 0.1
